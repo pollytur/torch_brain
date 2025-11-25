@@ -265,11 +265,3 @@ register_modality(
     loss_fn=torch_brain.nn.loss.MSELoss(),
 )
 
-register_modality(
-    "polly_size_2d",
-    dim=2,
-    type=DataType.CONTINUOUS,
-    timestamp_key="pupil.timestamps",
-    value_key="pupil.size",
-    loss_fn=torch_brain.nn.loss.MSELoss(),
-)
