@@ -373,10 +373,10 @@ def main(cfg: DictConfig):
         evaluator,
         ModelSummary(max_depth=2),  # Displays the number of parameters in the model.
         ModelCheckpoint(
-            dirpath=f"/scratch-grete/projects/nim00012/adapted_torch_brain/torch_brain/examples/poyo_plus/checkpoints/{cfg.wandb.run_name}/", 
+            dirpath=f".../{cfg.wandb.run_name}/", 
             save_last=True,
             monitor="average_val_metric",
-            mode="min",#"max",
+            mode="max",#"max",
             save_on_train_epoch_end=True,
             every_n_epochs=cfg.eval_epochs,
             save_top_k=5,  # Save the 3 best checkpoints
