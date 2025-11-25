@@ -2,8 +2,7 @@
 # this file needs to be combined with a model config and a dataset config
 
 # Paths
-# data_root: /mnt/vast-react/projects/neural_foundation_model/
-data_root: /mnt/vast-react/projects/neural_foundation_model/torch_brain_polly_export/
+data_root: ...
 log_dir: ./logs
 
 # Transforms
@@ -11,17 +10,17 @@ train_transforms: []
 eval_transforms: []
 
 # Training
-epochs: 1000
-batch_size: 128
-eval_epochs: 1
-eval_batch_size: null  # if null, will use batch_size
+epochs: 300
+batch_size: 256
+eval_epochs: 5
+eval_batch_size: 4 # if null, will use batch_size
 seed: 42  # use to set random seed
 sanity_check_validation: false  # if true, will start the run with validation 
 
 optim:
-  base_lr: 3.125e-5  # scaled linearly by batch size
-  weight_decay: 1e-4
-  lr_decay_start: 0.5  # fraction of epochs before starting LR decay
+  base_lr: 0.00002133902284270273 #3.125e-5  # scaled linearly by batch size
+  weight_decay: 0.00000023170796331 #1e-4
+  lr_decay_start: 0.668439449688685 #0.5  # fraction of epochs before starting LR decay
 
 # Logging
 wandb:
@@ -36,6 +35,7 @@ precision: 32
 nodes: 1
 gpus: 1
 num_workers: 4
+# num_workers: 0
 
 # Checkpointing
 ckpt_path: null  # for resuming training, or loading a model during finetuning

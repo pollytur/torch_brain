@@ -1,0 +1,137 @@
+program: train.py
+method: bayes
+name: "poyo_plus_bayes_sweep"
+entity: ecker-lab    # Add this line
+project: poyo        # Add this line
+
+metric:
+  name: average_val_metric
+  goal: maximize
+
+command:
+  - python
+  - ${program}
+  - --config-name=train_capoyo.yaml
+  - ${args_no_hyphens}
+  # - wandb.run_name=lr${optim.base_lr}_wd${optim.weight_decay}_lrds${optim.lr_decay_start}_bs${batch_size}_ls${model.latent_step}_nl${model.num_latents_per_step}_d${model.depth}_dim${model.dim}_dh${model.dim_head}_ch${model.cross_heads}_sh${model.self_heads}_fd${model.ffn_dropout}_ld${model.lin_dropout}_ad${model.atn_dropout}
+  # - optim.base_lr=${base_lr}
+  # - optim.weight_decay=${weight_decay}
+  # - optim.lr_decay_start=${lr_decay_start}
+  # - batch_size=${batch_size}
+  # - model.latent_step=${latent_step}
+  # - model.num_latents_per_step=${num_latents_per_step}
+  # - model.depth=${model_depth}
+  # - model.dim=${model_dim}
+  # - model.dim_head=${model_dim_head}
+  # - model.cross_heads=${model_cross_heads}
+  # - model.self_heads=${model_self_heads}
+  # - model.ffn_dropout=${model_ffn_dropout}
+  # - model.lin_dropout=${model_lin_dropout}
+  # - model.atn_dropout=${model_atn_dropout}
+
+parameters:
+  "optim.base_lr":
+    distribution: log_uniform_values
+    min: 5e-6
+    max: 5e-3
+    
+  "optim.weight_decay":
+    distribution: log_uniform_values
+    min: 1e-7
+    max: 1e-3
+
+  "optim.lr_decay_start":
+    distribution: uniform
+    min: 0.1
+    max: 0.7
+    
+  batch_size:
+    values: [64, 128, 256]
+
+  "model.latent_step":
+    values: [0.0625, 0.125, 0.25]
+    
+  "model.num_latents_per_step":
+    values: [8, 16, 32]
+    
+  "model.depth":
+    values: [4, 6, 12, 18, 24]
+    
+  "model.dim":
+    values: [32, 64, 128]
+    
+  "model.dim_head":
+    values: [32, 64, 128]
+    
+  "model.cross_heads":
+    values: [2, 4, 6, 8]
+    
+  "model.self_heads":
+    values: [2, 4, 6, 8]
+    
+  "model.ffn_dropout":
+    distribution: log_uniform_values
+    min: 0.01
+    max: 0.6
+    
+  "model.atn_dropout":
+    distribution: log_uniform_values
+    min: 0.01
+    max: 0.6
+    
+  "model.lin_dropout":
+    distribution: log_uniform_values
+    min: 0.01
+    max: 0.6
+
+early_terminate:
+  type: hyperband
+  min_iter: 7
+
+# parameters:
+
+#   # ----- Continuous hyperparameters -----
+#   base_lr:
+#     distribution: log_uniform_values
+#     min: 5e-6
+#     max: 5e-3
+#   weight_decay:
+#     distribution: log_uniform_values
+#     min: 1e-7
+#     max: 1e-3
+
+#   # ----- Discrete sweeps -----
+#   lr_decay_start:
+#     distribution: log_uniform_values
+#     min: 0.1
+#     max: 0.7
+#   batch_size:
+#     values: [64, 128, 256]
+
+#   # ----- Model params from capoyo_single_session.yaml (example; adjust to your actual values) -----
+#   latent_step:
+#     values: [0.0625, 0.125, 0.25]
+#   num_latents_per_step:
+#     values: [8, 16, 32]
+#   model_depth:
+#     values: [4, 6, 12, 18, 24]
+#   model_dim:
+#     values: [32, 64, 128]
+#   model_dim_head:
+#     values: [32, 64, 128]
+#   model_cross_heads:
+#     values: [2, 4, 6, 8]
+#   model_self_heads:
+#     values: [2, 4, 6, 8]
+#   model_ffn_dropout:
+#     distribution: log_uniform_values
+#     min: 0.01
+#     max: 0.6
+#   model_atn_dropout:
+#     distribution: log_uniform_values
+#     min: 0.01
+#     max: 0.6
+#   model_lin_dropout:
+#     distribution: log_uniform_values
+#     min: 0.01
+#     max: 0.6
