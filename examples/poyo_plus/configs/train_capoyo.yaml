@@ -4,8 +4,8 @@ defaults:
   - dataset: mice_8_benchmark_old.yaml #capoyo.yaml
   - _self_  # ensures current config overrides defaults
 
-epochs: 2000
-batch_size: 64
+epochs: 300
+batch_size: 256
 
 train_transforms:
   - _target_: torch_brain.transforms.UnitDropout
